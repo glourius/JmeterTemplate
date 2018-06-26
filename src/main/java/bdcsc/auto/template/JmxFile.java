@@ -18,8 +18,8 @@ import java.util.Map;
  * Created by mawenrui on 2018/6/10.
  */
 public class JmxFile implements FileTemplate{
-    private String interfaceName = Config.get("interfaceName");
-    private String variables = Config.get("variables");
+    private String interfaceName = Config.get("demand_code").trim() + "_" + Config.get("interfaceName");
+    private String variables = Config.get("variables").trim();
     private String[] commonParas = {"Product","Module","Method","apikey","tokenid"};
     private String[] commonStatus = {"为空","空格","大写","乱码","错值"};
     private Map<String, String> messages = MessageUtil.initMessage();

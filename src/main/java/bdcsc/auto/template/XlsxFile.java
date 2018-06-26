@@ -20,7 +20,7 @@ public class XlsxFile implements FileTemplate{
         // 生成测试用例的路径
         String interfaceName = Config.get("interfaceName").trim();
         String code = Config.get("demand_code").trim();
-        String resultXlsx = fileUrl + interfaceName + ".xlsx";
+        String resultXlsx = fileUrl + code + "_" + interfaceName + ".xlsx";
         // 生成测试脚本
         HSSFWorkbook workbook = new HSSFWorkbook();
         // 获取接口参数个数（即计算参数名称的个数）、参数名称、参数类型

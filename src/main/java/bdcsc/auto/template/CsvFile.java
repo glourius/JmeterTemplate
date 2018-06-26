@@ -18,13 +18,14 @@ import java.util.List;
  * Created by mawenrui on 2018/6/10.
  */
 public class CsvFile implements FileTemplate{
-    private String delimiter = Config.get("delimiter");
-    private String product = Config.get("product");
-    private String module = Config.get("module");
-    private String interfaceName = Config.get("interfaceName");
-    private String apikey = Config.get("apikey");
+    private String delimiter = Config.get("delimiter").trim();
+    private String product = Config.get("product").trim();
+    private String module = Config.get("module").trim();
+    private String interfaceName = Config.get("interfaceName").trim();
+    private String code = Config.get("demand_code").trim();
+    private String apikey = Config.get("apikey").trim();
     private String method = "";
-    private String correctData = Config.get("correct_data");
+    private String correctData = Config.get("correct_data").trim();
     private String tokenid = "";
 
     CsvFile(){
@@ -35,6 +36,7 @@ public class CsvFile implements FileTemplate{
             method = interfaceName;
         }
         tokenid = TokenUtil.getToken();
+        interfaceName = code + "_" + interfaceName;
     }
 
     @Override
@@ -137,7 +139,7 @@ public class CsvFile implements FileTemplate{
                 .append(tokenid).append(".json").append(delimiter)
                 .append(correctData);
         //将数据写入到文件中
-        String csvUrl = Config.getPerformanceUrl() + Config.get("interfaceName") + ".csv";
+        String csvUrl = Config.getPerformanceUrl() + interfaceName + ".csv";
         boolean flag = FileUtil.writeOut(cache.toString(), csvUrl);
         if (flag) {
             System.out.println(csvUrl + " 文件导出成功！");

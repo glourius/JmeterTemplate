@@ -24,21 +24,48 @@ public class Boot {
 
         System.out.println("程序启动……");
         // 获取当前项目(或者jar包)的绝对路径
+//        String product = "/Users/mawenrui/Desktop/";
         String product = System.getProperty("user.dir") + separator;
+        // 获取当前路径下的后缀为properties
+        File[] files = new File(product).listFiles();
 
-        // 初始化配置信息
-        Config.init(product);
 
+
+        int count = 0;
         FileFactory factory = new FileFactory();
         // 当入参为空时，默认生成全部结果
         if (args.length == 0){
-            // 生成测试脚本
-            factory.createFile("0", Config.getResultsUrl());
+            for (File f : files) {
+                String path = f.getPath();
+                if (".properties".equals(path.substring(path.length() - 11))) {
+                    // 初始化配置信息
+                    Config.init(product, path);
+                    // 生成测试脚本
+                    factory.createFile("0", Config.getResultsUrl());
+                    count++;
+                }
+            }
         } else {
-            factory.createFile(args[0], Config.getResultsUrl());
+            for (File f : files) {
+                String path = f.getPath();
+                if (".properties".equals(path.substring(path.length() - 11))) {
+                    // 初始化配置信息
+                    Config.init(product, path);
+                    // 生成测试脚本
+                    factory.createFile(args[0], Config.getResultsUrl());
+                    count++;
+                }
+            }
+
         }
         System.out.println("程序结束……");
+        System.out.println("共生成 " + count + " 个接口用例");
         Date end = new Date();
         System.out.println("程序耗费时间：" + (end.getTime() - begin.getTime()) + " ms");
+    }
+
+    private static void creating(String url){
+
+
     }
 }

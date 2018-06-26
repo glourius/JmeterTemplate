@@ -23,11 +23,10 @@ public class Config {
      * 初始化加载配置信息
      * @param rootUrl 配置文件的路径
      */
-    public static void init(String rootUrl){
+    public static void init(String rootUrl, String confUrl){
         try {
             // 配置文件的路径，加载配置文件
-            String configFile = rootUrl + "conf.properties";
-            props.load(new InputStreamReader(new FileInputStream(configFile), "UTF-8")); // TODO 这里处理了从配置文件获取中文出现乱码的问题
+            props.load(new InputStreamReader(new FileInputStream(confUrl), "UTF-8")); // TODO 这里处理了从配置文件获取中文出现乱码的问题
 
             // 生成结果的文件夹路径
             resultsUrl = rootUrl + "result" + separator;
