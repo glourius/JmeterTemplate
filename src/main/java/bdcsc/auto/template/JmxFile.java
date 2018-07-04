@@ -97,6 +97,7 @@ public class JmxFile implements FileTemplate{
             // 测试的预期执行结果（jmeter匹配的文本）
             String result = row.getCell(10).getStringCellValue();
             threadGroup(cache, title, code, result);
+            num++;
         }
 
         cache.append(JmxTemplate.lastJmx());

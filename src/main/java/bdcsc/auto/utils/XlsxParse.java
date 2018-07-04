@@ -3,6 +3,7 @@ package bdcsc.auto.utils;
 import bdcsc.auto.config.Config;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,8 +12,11 @@ import java.util.List;
  */
 public class XlsxParse {
 
-    private static final String delimiter = Config.get("delimiter");
+    private static String delimiter = Config.get("delimiter");
     private static final String[] variables = Config.get("variables").split(",");
+    static {
+        delimiter = "^".equals(delimiter) ? "\\^" : delimiter;
+    }
     private static final String[] correctData = Config.get("correct_data").split(delimiter);
 
     // 解析功能测试
@@ -32,7 +36,8 @@ public class XlsxParse {
         // 第一步，获取标题中参数在variables中的下标
         int index = -1;
         for (int i = 0; i < length; i++) {
-            if (variables[i].equals(theme.substring(0, theme.indexOf("参数")))) {
+            String variable = theme.substring(0, theme.indexOf("参数"));
+            if (variables[i].equals(variable)) {
                 index = i;
             }
         }
@@ -44,7 +49,7 @@ public class XlsxParse {
             if (j == index) {
                 result += data + ",";
             } else {
-                result += correctData[j];
+                result += correctData[j] + ",";
             }
         }
 

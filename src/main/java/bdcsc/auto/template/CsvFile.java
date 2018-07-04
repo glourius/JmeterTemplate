@@ -55,7 +55,8 @@ public class CsvFile implements FileTemplate{
             List<HSSFRow> data = new ArrayList<>();
             for (int i = 3; i <= lastRowNum; i++) {
                 HSSFRow row = sheet.getRow(i);
-                if ("功能测试".equals(row.getCell(4).getStringCellValue().trim())) {
+                if ("功能测试".equals(row.getCell(4).getStringCellValue().trim())
+                        && !"返回结果格式验证（xml,json)|日志验证|服务项编码验证".contains(row.getCell(5).getStringCellValue().trim())) {
                     function.add(row);
                 } else if ("数据测试".equals(row.getCell(4).getStringCellValue().trim())) {
                     data.add(row);
