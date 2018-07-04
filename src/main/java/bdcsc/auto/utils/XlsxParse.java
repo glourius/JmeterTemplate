@@ -13,11 +13,12 @@ import java.util.List;
 public class XlsxParse {
 
     private static String delimiter = Config.get("delimiter");
+    private static String newDelimiter = "";
     private static final String[] variables = Config.get("variables").split(",");
     static {
-        delimiter = "^".equals(delimiter) ? "\\^" : delimiter;
+        newDelimiter = "^".equals(delimiter) ? "\\^" : delimiter;
     }
-    private static final String[] correctData = Config.get("correct_data").split(delimiter);
+    private static final String[] correctData = Config.get("correct_data").split(newDelimiter);
 
     // 解析功能测试
     public static void parseFunction(StringBuilder cache, List<HSSFRow> rows, StringBuilder begin){
@@ -31,7 +32,7 @@ public class XlsxParse {
 
     // 检验测试用例中的标题
     private static String checkTheme(String theme) {
-        String result = Config.get("correct_data");
+        String result = "";
         int length = variables.length;
         // 第一步，获取标题中参数在variables中的下标
         int index = -1;
@@ -47,9 +48,9 @@ public class XlsxParse {
         // 第三步，截取正确数据中的参数
         for (int j = 0; j < length; j++) {
             if (j == index) {
-                result += data + ",";
+                result += data + delimiter;
             } else {
-                result += correctData[j] + ",";
+                result += correctData[j] + delimiter;
             }
         }
 

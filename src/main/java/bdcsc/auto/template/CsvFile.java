@@ -92,6 +92,7 @@ public class CsvFile implements FileTemplate{
                         cache.append(commonParams[k]).append(delimiter);
                     }
                 }
+                cache = cache.replace(cache.length() - 1, cache.length(), "");
                 cache.append(".json").append(delimiter).append(correctData).append("\n");
             }
         }
