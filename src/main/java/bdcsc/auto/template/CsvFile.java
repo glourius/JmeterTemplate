@@ -3,6 +3,7 @@ package bdcsc.auto.template;
 import bdcsc.auto.config.Config;
 import bdcsc.auto.utils.FileUtil;
 import bdcsc.auto.utils.TokenUtil;
+import bdcsc.auto.utils.XlsxParse;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -52,7 +53,7 @@ public class CsvFile implements FileTemplate{
             // 遍历每一行，获取测试项（4）、标题（5）、预期结果（8）
             List<HSSFRow> function = new ArrayList<>();
             List<HSSFRow> data = new ArrayList<>();
-            for (int i = 1; i <= lastRowNum; i++) {
+            for (int i = 3; i <= lastRowNum; i++) {
                 HSSFRow row = sheet.getRow(i);
                 if ("功能测试".equals(row.getCell(4).getStringCellValue().trim())) {
                     function.add(row);
@@ -93,12 +94,16 @@ public class CsvFile implements FileTemplate{
                 cache.append(".json").append(delimiter).append(correctData).append("\n");
             }
         }
+        cache.append(product).append(delimiter).append(module).append(delimiter)
+                .append(method).append(delimiter).append(apikey).append(delimiter)
+                .append(tokenid).append(".json").append(delimiter)
+                .append(correctData).append("\n");
 
-        // TODO 还没写生成输入参数的数据
-
-
-
-
+        StringBuilder begin = new StringBuilder(product).append(delimiter).append(module).append(delimiter)
+                .append(method).append(delimiter).append(apikey).append(delimiter)
+                .append(tokenid).append(".json").append(delimiter);
+        // TODO 生成输入参数的数据
+        XlsxParse.parseFunction(cache, rows, begin);
 
         //将数据写入到文件中
         String functionUrl = Config.getFunctionUrl() + interfaceName + ".csv";
@@ -116,6 +121,7 @@ public class CsvFile implements FileTemplate{
                 .append(method).append(delimiter).append(apikey).append(delimiter)
                 .append(tokenid).append(".json").append(delimiter)
                 .append(correctData).append("\n");
+
         // TODO 还没有写数据测试的测试数据
 
 

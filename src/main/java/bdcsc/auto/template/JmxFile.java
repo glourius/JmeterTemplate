@@ -19,9 +19,10 @@ import java.util.Map;
  * Created by mawenrui on 2018/6/10.
  */
 public class JmxFile implements FileTemplate{
-    private String interfaceName = Config.get("demand_code").trim() + "_" + Config.get("interfaceName");
-    private String variables = Config.get("variables").trim();
-    private String[] commonParas = {"Product","Module","Method","apikey","tokenid"};
+    private static final String delimiter = Config.get("delimiter");
+    private final String interfaceName = Config.get("demand_code").trim() + "_" + Config.get("interfaceName");
+    private final String variables = Config.get("variables").trim();
+    private final String[] commonParas = {"Product","Module","Method","apikey","tokenid"};
     private String[] commonStatus = {"为空","空格","大写","乱码","错值"};
     private Map<String, String> messages = MessageUtil.initMessage();
     private Map<String, Integer> codes = MessageUtil.initCode();
@@ -97,16 +98,6 @@ public class JmxFile implements FileTemplate{
             String result = row.getCell(10).getStringCellValue();
             threadGroup(cache, title, code, result);
         }
-
-
-
-
-
-
-
-
-
-
 
         cache.append(JmxTemplate.lastJmx());
 
@@ -227,13 +218,23 @@ public class JmxFile implements FileTemplate{
                 "          <elementProp name=\"HTTPsampler.Arguments\" elementType=\"Arguments\" guiclass=\"HTTPArgumentsPanel\" testclass=\"Arguments\" testname=\"用户定义的变量\" enabled=\"true\">\n" +
                 "            <collectionProp name=\"Arguments.arguments\">");
         for (String variable : variables.split(",")) {
-            cache.append("<elementProp name=\""+variable+"\" elementType=\"HTTPArgument\">\n" +
-                    "                <boolProp name=\"HTTPArgument.always_encode\">true</boolProp>\n" +
-                    "                <stringProp name=\"Argument.value\">${"+variable+"}</stringProp>\n" +
-                    "                <stringProp name=\"Argument.metadata\">=</stringProp>\n" +
-                    "                <boolProp name=\"HTTPArgument.use_equals\">true</boolProp>\n" +
-                    "                <stringProp name=\"Argument.name\">"+variable+"</stringProp>\n" +
-                    "              </elementProp>");
+            if (title.contains(variable) && title.contains("缺省")) {
+                cache.append("<elementProp name=\"\" elementType=\"HTTPArgument\">\n" +
+                        "                <boolProp name=\"HTTPArgument.always_encode\">true</boolProp>\n" +
+                        "                <stringProp name=\"Argument.value\">${"+variable+"}</stringProp>\n" +
+                        "                <stringProp name=\"Argument.metadata\">=</stringProp>\n" +
+                        "                <boolProp name=\"HTTPArgument.use_equals\">true</boolProp>\n" +
+                        "                <stringProp name=\"Argument.name\"></stringProp>\n" +
+                        "              </elementProp>");
+            } else {
+                cache.append("<elementProp name=\""+variable+"\" elementType=\"HTTPArgument\">\n" +
+                        "                <boolProp name=\"HTTPArgument.always_encode\">true</boolProp>\n" +
+                        "                <stringProp name=\"Argument.value\">${"+variable+"}</stringProp>\n" +
+                        "                <stringProp name=\"Argument.metadata\">=</stringProp>\n" +
+                        "                <boolProp name=\"HTTPArgument.use_equals\">true</boolProp>\n" +
+                        "                <stringProp name=\"Argument.name\">"+variable+"</stringProp>\n" +
+                        "              </elementProp>");
+            }
         }
         cache.append("</collectionProp>\n" +
                 "          </elementProp>\n" +
