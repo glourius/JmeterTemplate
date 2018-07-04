@@ -24,11 +24,11 @@ public class Boot {
 
         System.out.println("程序启动……");
         // 获取当前项目(或者jar包)的绝对路径
-//        String product = "/Users/mawenrui/Desktop/";
+//        String product = "/Users/mawenrui/Desktop/生成jmeter模版/";
         String product = System.getProperty("user.dir") + separator;
         System.out.println("正在读取 " + product + " 文件夹下的配置文件…………");
         // 获取当前路径下的后缀为properties
-        File[] files = new File(product).listFiles();
+        File[] files = new File(product + separator + "config").listFiles();
 
 
 

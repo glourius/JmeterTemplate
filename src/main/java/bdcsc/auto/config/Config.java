@@ -27,6 +27,7 @@ public class Config {
         try {
             // 配置文件的路径，加载配置文件
             props.load(new InputStreamReader(new FileInputStream(confUrl), "UTF-8")); // TODO 这里处理了从配置文件获取中文出现乱码的问题
+            System.out.println("配置文件路径" + confUrl);
 
             // 生成结果的文件夹路径
             resultsUrl = rootUrl + "result" + separator;

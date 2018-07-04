@@ -58,6 +58,7 @@ public class XlsxFile implements FileTemplate{
             out = new FileOutputStream(resultXlsx);
             // 保存excel文件
             workbook.write(out);
+            workbook.close();
             System.out.println(resultXlsx + " 测试用例生成成功！");
         } catch (FileNotFoundException e) {
             System.out.println("文件\""+ resultXlsx +"\"未找到！");

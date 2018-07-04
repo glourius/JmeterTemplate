@@ -7,12 +7,6 @@ import org.apache.commons.lang.StringEscapeUtils;
  * Created by mawenrui on 2018/6/11.
  */
 public class JmxTemplate {
-    private static String interfaceName = Config.get("interfaceName");
-    private static String variables = Config.get("variables");
-    private static String domain = Config.get("domain");
-    private static String port = Config.get("port");
-    private static String delimiter = Config.get("delimiter");
-    private static String fileEncoding = Config.get("fileEncoding");
     public static String preJmx(){
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<jmeterTestPlan version=\"1.2\" properties=\"2.9\" jmeter=\"3.0 r1743807\">\n" +
@@ -154,22 +148,22 @@ public class JmxTemplate {
                 "    </TestPlan>\n" +
                 "    <hashTree>\n" +
                 "      <CSVDataSet guiclass=\"TestBeanGUI\" testclass=\"CSVDataSet\" testname=\"CSV Data Set Config\" enabled=\"true\">\n" +
-                "        <stringProp name=\"delimiter\">"+delimiter+"</stringProp>\n" +
-                "        <stringProp name=\"fileEncoding\">"+fileEncoding+"</stringProp>\n" +
+                "        <stringProp name=\"delimiter\">"+Config.get("delimiter")+"</stringProp>\n" +
+                "        <stringProp name=\"fileEncoding\">"+Config.get("fileEncoding")+"</stringProp>\n" +
                 "        <stringProp name=\"filename\">"+csvUrl+"</stringProp>\n" +
                 "        <boolProp name=\"quotedData\">false</boolProp>\n" +
                 "        <boolProp name=\"recycle\">true</boolProp>\n" +
                 "        <stringProp name=\"shareMode\">shareMode.all</stringProp>\n" +
                 "        <boolProp name=\"stopThread\">true</boolProp>\n" +
-                "        <stringProp name=\"variableNames\">Product,Module,Method,apikey,tokenid,"+variables+"</stringProp>\n" +
+                "        <stringProp name=\"variableNames\">Product,Module,Method,apikey,tokenid,"+Config.get("variables")+"</stringProp>\n" +
                 "      </CSVDataSet>\n" +
                 "      <hashTree/>\n" +
-                "      <ConfigTestElement guiclass=\"HttpDefaultsGui\" testclass=\"ConfigTestElement\" testname=\""+interfaceName+"接口\" enabled=\"true\">\n" +
+                "      <ConfigTestElement guiclass=\"HttpDefaultsGui\" testclass=\"ConfigTestElement\" testname=\""+Config.get("interfaceName")+"接口\" enabled=\"true\">\n" +
                 "        <elementProp name=\"HTTPsampler.Arguments\" elementType=\"Arguments\" guiclass=\"HTTPArgumentsPanel\" testclass=\"Arguments\" testname=\"用户定义的变量\" enabled=\"true\">\n" +
                 "          <collectionProp name=\"Arguments.arguments\"/>\n" +
                 "        </elementProp>\n" +
-                "        <stringProp name=\"HTTPSampler.domain\">"+domain+"</stringProp>\n" +
-                "        <stringProp name=\"HTTPSampler.port\">"+port+"</stringProp>\n" +
+                "        <stringProp name=\"HTTPSampler.domain\">"+Config.get("domain")+"</stringProp>\n" +
+                "        <stringProp name=\"HTTPSampler.port\">"+Config.get("port")+"</stringProp>\n" +
                 "        <stringProp name=\"HTTPSampler.connect_timeout\"></stringProp>\n" +
                 "        <stringProp name=\"HTTPSampler.response_timeout\"></stringProp>\n" +
                 "        <stringProp name=\"HTTPSampler.protocol\"></stringProp>\n" +

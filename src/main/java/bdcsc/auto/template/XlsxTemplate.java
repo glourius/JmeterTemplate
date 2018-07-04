@@ -9,11 +9,11 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
  * Created by mawenrui on 2018/7/3.
  */
 public class XlsxTemplate {
-    // 需求名称、编号
-    private static final String demandName = Config.get("demand_name");
-    private static final String demandCode = Config.get("demand_code");
 
     public static void functionBegin(HSSFSheet sheet){
+        // 需求名称、编号
+        String demandName = Config.get("demand_name");
+        String demandCode = Config.get("demand_code");
 
         // 第一行，常规参数
         HSSFRow row = sheet.createRow(1);
@@ -53,6 +53,9 @@ public class XlsxTemplate {
      * @param sheet 标签页
      */
     public static void functionEnd(HSSFSheet sheet){
+        // 需求名称、编号
+        String demandName = Config.get("demand_name");
+        String demandCode = Config.get("demand_code");
         String[] args = {"返回结果格式验证（xml,json)", "日志验证", "服务项编码验证"};
         String[] result = {"200", "正确", "正确"};
 
@@ -79,6 +82,9 @@ public class XlsxTemplate {
     }
 
     public static void dataBegin(HSSFSheet sheet){
+        // 需求名称、编号
+        String demandName = Config.get("demand_name");
+        String demandCode = Config.get("demand_code");
         int num = sheet.getLastRowNum() + 1;
         HSSFRow row2 = sheet.createRow(num);
         row2.createCell(0).setCellValue(demandCode + "-" + num);
@@ -97,6 +103,9 @@ public class XlsxTemplate {
     }
 
     public static void performance(HSSFSheet sheet){
+        // 需求名称、编号
+        String demandName = Config.get("demand_name");
+        String demandCode = Config.get("demand_code");
         // 性能测试
         int lastNum = sheet.getLastRowNum() + 1;
         HSSFRow lastRow = sheet.createRow(lastNum);

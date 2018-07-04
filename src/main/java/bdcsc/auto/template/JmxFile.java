@@ -19,7 +19,6 @@ import java.util.Map;
  * Created by mawenrui on 2018/6/10.
  */
 public class JmxFile implements FileTemplate{
-    private static final String delimiter = Config.get("delimiter");
     private final String interfaceName = Config.get("demand_code").trim() + "_" + Config.get("interfaceName");
     private final String variables = Config.get("variables").trim();
     private final String[] commonParas = {"Product","Module","Method","apikey","tokenid"};
