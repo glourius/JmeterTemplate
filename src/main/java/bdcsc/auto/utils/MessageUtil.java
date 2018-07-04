@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 固定参数的用例判断
  * Created by mawenrui on 2018/6/16.
  */
 public class MessageUtil {

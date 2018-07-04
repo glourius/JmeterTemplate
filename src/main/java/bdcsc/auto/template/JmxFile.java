@@ -9,6 +9,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,11 +35,10 @@ public class JmxFile implements FileTemplate{
             HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(xlsxUrl));
             HSSFSheet sheet = workbook.getSheetAt(sheetIndex);
             int lastRowNum = sheet.getLastRowNum();
-            // 遍历每一行，获取测试项（4）、标题（5）、预期结果（8）
+            // 遍历每一行，获取测试项（4）
             List<HSSFRow> function = new ArrayList<>();
             List<HSSFRow> data = new ArrayList<>();
-            List<HSSFRow> performance = new ArrayList<>();
-            for (int i = 1; i <= lastRowNum; i++){
+            for (int i = 2; i <= lastRowNum; i++){
                 HSSFRow row = sheet.getRow(i);
                 if ("功能测试".equals(row.getCell(4).getStringCellValue().trim())) {
                     function.add(row);
@@ -65,11 +65,10 @@ public class JmxFile implements FileTemplate{
         cache.append(JmxTemplate.pre(functionUrl));
         threadGroup(cache, "1.功能性验证-正常值", 200, "status\":\"SUCCEED\"");
 
-        int num = 1;
+        int num = 2;
         String p = ".功能性验证-";
         for (int i = 0; i < commonParas.length; i++) {
             for (int j = 0; j < commonStatus.length; j++) {
-                num++;
                 String para = commonParas[i];
                 String status = commonStatus[j];
                 String title = num + p + para + "参数-" + status;
@@ -78,12 +77,26 @@ public class JmxFile implements FileTemplate{
                 } else {
                     threadGroup(cache, title, 404, messages.get(para + status));
                 }
-
+                num++;
             }
         }
 
         // TODO 还没有写输入参数的校验
-
+        // 遍历每一行，获取测试项（4）、标题（5）、预期结果（8）、执行结果（10）
+        for (int j = 0; j < rows.size(); j++) {
+            HSSFRow row = rows.get(j);
+            // 测试的标题
+            String theme = row.getCell(5).getStringCellValue();
+            if ("返回结果格式验证（xml,json)|日志验证|服务项编码验证".contains(theme)) {
+                continue;
+            }
+            String title = num + p + theme;
+            // 测试的预期结果（jmeter匹配的编码）
+            int code = Integer.parseInt(row.getCell(8).getStringCellValue());
+            // 测试的预期执行结果（jmeter匹配的文本）
+            String result = row.getCell(10).getStringCellValue();
+            threadGroup(cache, title, code, result);
+        }
 
 
 
