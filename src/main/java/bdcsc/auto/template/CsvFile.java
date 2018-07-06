@@ -106,6 +106,10 @@ public class CsvFile implements FileTemplate{
                 .append(tokenid).append(".json").append(delimiter);
         // TODO 生成输入参数的数据
         XlsxParse.parseFunction(cache, rows, begin);
+        cache.append(product).append(delimiter).append(module).append(delimiter)
+                .append(method).append(delimiter).append(apikey).append(delimiter)
+                .append(tokenid).append(".xml").append(delimiter)
+                .append(correctData).append("\n");
 
         //将数据写入到文件中
         String functionUrl = Config.getFunctionUrl() + interfaceName + ".csv";

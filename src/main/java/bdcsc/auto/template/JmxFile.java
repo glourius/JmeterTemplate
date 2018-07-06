@@ -99,6 +99,8 @@ public class JmxFile implements FileTemplate{
             num++;
         }
 
+
+        threadGroup(cache, num + p + "返回结果格式验证(xml)", 200, "");
         cache.append(JmxTemplate.lastJmx());
 
         //将数据写入到文件中
