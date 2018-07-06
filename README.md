@@ -6,8 +6,8 @@
 * 将command包下面的两个运行脚本拷贝到与jar包、config配置文件夹同级别的目录下
 * 文件的级别大致为
     * 最外层文件夹
-        * run.sh
-        * run.bat
+        * run.sh (linux环境运行此命令，为文件添加执行权限后运行 ./run.sh)
+        * run.bat (windows环境运行该命令，双击即可)
         * jmeter.jar
         * config文件夹
             * 配置文件.properties   
